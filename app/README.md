@@ -6,7 +6,7 @@ A aplicação se propõe a ser um streaming de filmes de animes
 
 ## Tecnologias
 
--   Api de filmes do Studio Ghibli
+-   [Api de filmes do Studio Ghibli](https://ghibliapi.herokuapp.com/films)
 -   Typescript
 -   Redux
 -   Styled Components
