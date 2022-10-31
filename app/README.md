@@ -10,6 +10,7 @@ A aplicação se propõe a ser um streaming de filmes de animes
 -   Typescript
 -   Redux
 -   Styled Components
+-   Expo
 
 ## Limitações e Bugs
 
