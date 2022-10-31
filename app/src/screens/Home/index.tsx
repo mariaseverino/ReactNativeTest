@@ -1,60 +1,35 @@
+import { Feather } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
-import { FlatList, Text } from "react-native";
-import { FilmCard } from "../../components/FilmCard";
+import Carousel from "react-native-snap-carousel";
+import { MovieCard } from "../../components/MovieCard";
 import api from "../../services";
+import colors from "../../utils/colors";
+import { movieProp } from "../../utils/types";
 
-import { Container, Scroll, Tittle } from "./styles";
-
-export interface Film {
-    id: string;
-    title: string;
-    image: string;
-    description: string;
-    director: string;
-    producer: string;
-    release_date: string;
-    running_time: string;
-    rt_score: string;
-}
+import { Container, Tittle, Search, WrapperSearch } from "./styles";
 
 export function Home() {
-    const [films, setFilms] = useState<Film[]>([]);
+    const [movies, setMovies] = useState<movieProp[]>([]);
 
     useEffect(() => {
-        api.get("/").then((response) => setFilms(response.data));
+        api.get("?limit=5").then((response) => setMovies(response.data));
     }, []);
 
     return (
         <Container>
-            <Scroll>
-                <Tittle>Popular</Tittle>
-                <FlatList
-                    data={films}
-                    renderItem={({ item }) => (
-                        <FilmCard
-                            film={item}
-                            height={"300px"}
-                            width={"200px"}
-                        />
-                    )}
-                    keyExtractor={(item) => item.id}
-                    horizontal={true}
-                    showsHorizontalScrollIndicator={false}
-                />
-                <Tittle>Pra você</Tittle>
-                <FlatList
-                    data={films}
-                    renderItem={({ item }) => (
-                        <FilmCard
-                            film={item}
-                            height={"150px"}
-                            width={"110px"}
-                        />
-                    )}
-                    numColumns={3}
-                    columnWrapperStyle={{ justifyContent: "space-between" }}
-                />
-            </Scroll>
+            <WrapperSearch>
+                <Feather name="search" size={24} color={colors.dark.text} />
+                <Search />
+            </WrapperSearch>
+            <Tittle>Movies Ghibli</Tittle>
+            <Carousel
+                data={movies}
+                renderItem={({ item }) => <MovieCard movie={item} />}
+                sliderWidth={330}
+                itemWidth={200}
+                useScrollView={true}
+                loop={true}
+            />
         </Container>
     );
 }
